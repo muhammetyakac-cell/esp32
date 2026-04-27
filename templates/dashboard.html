@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Kullanıcı Dashboard</h2>
+<p><strong>Müşteri:</strong> {{ current_user.customer_name }}</p>
+<p><strong>Kullanıcı:</strong> {{ current_user.username }}</p>
+
+{% if error %}
+  <p class="flash-error">{{ error }}</p>
+{% endif %}
+
+<h3>Son Telemetri Kayıtları</h3>
+{% if telemetry %}
+<table>
+  <thead>
+    <tr>
+      {% for k in telemetry[0].keys() %}
+      <th>{{ k }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+  {% for row in telemetry %}
+    <tr>
+      {% for value in row.values() %}
+      <td>{{ value }}</td>
+      {% endfor %}
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>Gösterilecek kayıt yok.</p>
+{% endif %}
+{% endblock %}

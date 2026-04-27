@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DZY Panel</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2rem; background: #f7f7f8; }
+    .container { max-width: 1100px; margin: auto; background: white; padding: 1.2rem; border-radius: 10px; }
+    .nav { display: flex; justify-content: space-between; margin-bottom: 1rem; }
+    .flash-error { color: #a70000; }
+    .flash-success { color: #006b23; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    th { background: #efefef; }
+    input, button { padding: 8px; margin: 4px 0; width: 100%; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="nav">
+      <strong>DZY Panel</strong>
+      <a href="{{ url_for('logout') }}">Çıkış</a>
+    </div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, msg in messages %}
+          <p class="flash-{{ category }}">{{ msg }}</p>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>

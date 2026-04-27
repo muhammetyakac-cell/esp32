@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Admin Panel</h2>
+<p>Hoş geldin, {{ current_user.username }}. Buradan yeni müşteri kullanıcıları oluşturabilirsin.</p>
+
+<div class="grid">
+  <div>
+    <h3>Yeni Kullanıcı Oluştur</h3>
+    <form method="post">
+      <label>Kullanıcı adı</label>
+      <input name="username" required>
+      <label>Başlangıç şifresi</label>
+      <input name="password" type="password" required>
+      <label>Müşteri adı</label>
+      <input name="customer_name" required>
+      <label>Supabase URL</label>
+      <input name="supabase_url" placeholder="https://xxxx.supabase.co">
+      <label>Supabase anon key</label>
+      <input name="supabase_anon_key" placeholder="eyJ...">
+      <button type="submit">Kullanıcıyı Kaydet</button>
+    </form>
+  </div>
+  <div>
+    <h3>Not</h3>
+    <p>Bu sayfada girilen Supabase bilgileri, kullanıcının dashboard verisini hangi projeden çekeceğini belirler.</p>
+  </div>
+</div>
+
+<h3>Mevcut Kullanıcılar</h3>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Username</th>
+      <th>Customer</th>
+      <th>Supabase URL</th>
+      <th>Role</th>
+      <th>Created</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for u in users %}
+    <tr>
+      <td>{{ u.id }}</td>
+      <td>{{ u.username }}</td>
+      <td>{{ u.customer_name }}</td>
+      <td>{{ u.supabase_url }}</td>
+      <td>{% if u.is_admin %}Admin{% else %}User{% endif %}</td>
+      <td>{{ u.created_at }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
